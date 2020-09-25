@@ -53,6 +53,32 @@ $font-size-base: 13px;
 
   &-sector {
     display: flex;
+    align-items: center;
+
+    &-access {
+      width: 16px;
+      height: 16px;
+      border: 1px solid grey;
+      margin-right: 8px;
+      background: blue;
+      cursor: pointer;
+    }
+    &-indeterminate {
+      width: 16px;
+      height: 16px;
+      border: 1px solid grey;
+      margin-right: 8px;
+      background: yellow;
+      cursor: pointer;
+    }
+    &-empty {
+      width: 16px;
+      height: 16px;
+      border: 1px solid grey;
+      margin-right: 8px;
+      background: white;
+      cursor: pointer;
+    }
   }
 
   &-plus {

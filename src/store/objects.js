@@ -3,10 +3,10 @@ export default {
     state: {
         objects: [
             {
-                title: 'Level: 0, Item: 1',
-                level: 0,
+                title: 'Level: 1, Item id: 0',
+                level: 1,
                 indeterminate: false,
-                allChildSelected: false,
+                selected: false,
                 id: 0,
                 child: [],
             },
@@ -18,21 +18,22 @@ export default {
     mutations: {
         ADD_NEW_OBJECT(state) {
             state.objects.push({
-                title: `Level: 0, Item: ${state.objects.length + 1}`,
-                level: 0,
+                title: `Level: 1, Item id: ${state.objects.length}`,
+                level: 1,
                 indeterminate: false,
-                allChildSelected: false,
+                selected: false,
                 id: state.objects.length,
                 child: []
             })
         },
         ADD_NEW_CHILD_OBJECT(state, object) {
             object.child.push({
-                title: `Level: ${object.level + 1} Parent id: ${object.id}, Item id: ${object.child.length + 1}`,
+                title: `Level: ${object.level + 1} Parent id: ${object.id}, Item id: ${object.child.length}`,
                 level: object.level + 1,
                 indeterminate: false,
-                allChildSelected: false,
-                id: object.child.length + 1,
+                parentId: object.id,
+                selected: false,
+                id: object.child.length,
                 child: []
             })
             state.objects.map(function(parentObject) {
@@ -43,8 +44,46 @@ export default {
                 return parentObject
             })
         },
-        REMOVE_OBJECT() {
-            //
+        SET_CHILD_STATUS(state, query) {
+            if(query.status === null) query.object.indeterminate = false
+            query.object.selected = query.status
+            if(query.object.child.length) recursiveChecked(query.status, query.object.child)
+            recursiveIndeterminate(state.objects, query.object)
+
+            state.objects.map(function(object) {
+                if(object.level === query.object.level && object.id === query.object.id) object = query.object
+                return object
+            })
+
+
+            function recursiveChecked(checked, objects) {
+                objects.map(function(object) {
+                    object.selected = checked
+                    if(object.child.length) recursiveChecked(checked, object.child)
+                    return object
+                })
+            }
+
+            function recursiveIndeterminate(objects, queryObject) {
+                objects.map(function(object) {
+                    if(object.level < queryObject.level) {
+                        if(object.id === queryObject.parentId) {
+                            if(object.child.every(object => object.selected)) {
+                                object.selected = true
+                                object.indeterminate = false
+                            } else if(object.child.every(object => !object.selected)) {
+                                object.selected = false
+                                object.indeterminate = false
+                            } else if(object.child.some(object => object.selected)) {
+                                object.selected = false
+                                object.indeterminate = true
+                            }
+                        }
+                    }
+                    recursiveIndeterminate(object.child, queryObject)
+                    return object
+                })
+            }
         }
     },
 };
