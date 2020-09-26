@@ -59,6 +59,7 @@ export default {
             function recursiveChecked(checked, objects) {
                 objects.map(function(object) {
                     object.selected = checked
+                    object.indeterminate = false
                     if(object.child.length) recursiveChecked(checked, object.child)
                     return object
                 })
