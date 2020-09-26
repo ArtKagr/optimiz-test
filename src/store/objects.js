@@ -32,7 +32,7 @@ export default {
                 level: object.level + 1,
                 indeterminate: false,
                 parentId: object.id,
-                selected: false,
+                selected: object.selected,
                 id: object.child.length,
                 child: []
             })
