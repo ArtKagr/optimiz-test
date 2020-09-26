@@ -55,30 +55,26 @@ $font-size-base: 13px;
     display: flex;
     align-items: center;
 
-    &-access {
+    &-checkbox {
       width: 16px;
       height: 16px;
       border: 1px solid grey;
       margin-right: 8px;
-      background: blue;
       cursor: pointer;
+
+      &.-access {
+        background: blue;
+      }
+
+      &.-indeterminate {
+        background: yellow;
+      }
+
+      &.-empty {
+        background: white;
+      }
     }
-    &-indeterminate {
-      width: 16px;
-      height: 16px;
-      border: 1px solid grey;
-      margin-right: 8px;
-      background: yellow;
-      cursor: pointer;
-    }
-    &-empty {
-      width: 16px;
-      height: 16px;
-      border: 1px solid grey;
-      margin-right: 8px;
-      background: white;
-      cursor: pointer;
-    }
+
   }
 
   &-plus {

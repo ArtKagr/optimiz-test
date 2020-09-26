@@ -3,9 +3,9 @@
     <div class="card_field" v-for="(object, key) in objects" :key="key">
       <div class="card">
         <div class="card-sector">
-          <div v-if="object.selected && !object.indeterminate" @click="setStatus(false, object)" class="card-sector-access"></div>
-          <div v-else-if="!object.selected && !object.indeterminate"  @click="setStatus(true, object)" class="card-sector-empty"></div>
-          <div v-else-if="object.indeterminate" @click="setStatus(null, object)" class="card-sector-indeterminate"></div>
+          <div v-if="object.selected && !object.indeterminate" @click="setStatus(false, object)" class="card-sector-checkbox -access"></div>
+          <div v-else-if="!object.selected && !object.indeterminate"  @click="setStatus(true, object)" class="card-sector-checkbox -empty"></div>
+          <div v-else-if="object.indeterminate" @click="setStatus(null, object)" class="card-sector-checkbox -indeterminate"></div>
           <div>{{ object.title }}</div>
         </div>
         <div class="card-plus" @click="addChildObject(object)">+</div>
